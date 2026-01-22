@@ -1,8 +1,15 @@
-﻿
+﻿using System.Diagnostics;
+
 namespace CoreApplication1
 {
     public class Startup
     {
+        IConfiguration _config;
+        public Startup(IConfiguration config)
+        {
+            _config = config;
+        }
+
         public void ConfigureServices(IServiceCollection services)
         {
 
@@ -18,11 +25,13 @@ namespace CoreApplication1
             app.Run(async (context) =>
             {
                 await context.Response
-                    .WriteAsync("Jello");
+                    .WriteAsync(_config["MyKey"]);
             });
         }
     }
 }
+
+
 
 
 
