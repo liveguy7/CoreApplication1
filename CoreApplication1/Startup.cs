@@ -25,7 +25,7 @@ namespace CoreApplication1
             app.Run(async (context) =>
             {
                 await context.Response
-                    .WriteAsync(_config["MyKey"]);
+                    .WriteAsync("Jello String");
             });
         }
     }
