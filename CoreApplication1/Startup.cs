@@ -15,17 +15,28 @@ namespace CoreApplication1
 
         }
 
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ILogger<Startup> logger)
         {
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
             }
+            else if(env.IsStaging() || env.IsProduction() || env.IsEnvironment("UAT"))
+            {
+                //app.UseExceptionHandler("/Error");
+            }
+
+                DefaultFilesOptions dFO = new DefaultFilesOptions();
+            dFO.DefaultFileNames.Clear();
+            dFO.DefaultFileNames.Add("home.html");
+            app.UseDefaultFiles(dFO);
+            app.UseStaticFiles();
 
             app.Run(async (context) =>
             {
                 await context.Response
-                    .WriteAsync("Jello String");
+                    .WriteAsync($"Hosting Env: {env.EnvironmentName}");
+           
             });
         }
     }
