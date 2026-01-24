@@ -7,17 +7,28 @@ namespace CoreApplication1.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
+        private IEmployeeRepository _eRep;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(ILogger<HomeController> logger, IEmployeeRepository eRep)
         {
             _logger = logger;
+            _eRep = eRep;
         }
 
-        public IActionResult Index()
+        public JsonResult Index()
         {
-            return View();
+            return Json(new
+            {
+                _eRep.GetEmployee(1).Name,
+                number = 1
+            });
         }
 
+        public String About()
+        {
+            return "About Message";
+        }
+   
         public IActionResult Privacy()
         {
             return View();
@@ -30,3 +41,4 @@ namespace CoreApplication1.Controllers
         }
     }
 }
+

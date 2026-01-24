@@ -1,4 +1,5 @@
-﻿using System.Diagnostics;
+﻿using CoreApplication1.Models;
+using System.Diagnostics;
 
 namespace CoreApplication1
 {
@@ -12,6 +13,9 @@ namespace CoreApplication1
 
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddMvc(options =>
+                 options.EnableEndpointRouting = false);
+            services.AddSingleton<IEmployeeRepository, EmployeeRepository>();
 
         }
 
@@ -21,16 +25,13 @@ namespace CoreApplication1
             {
                 app.UseDeveloperExceptionPage();
             }
-            else if(env.IsStaging() || env.IsProduction() || env.IsEnvironment("UAT"))
-            {
-                //app.UseExceptionHandler("/Error");
-            }
 
-                DefaultFilesOptions dFO = new DefaultFilesOptions();
-            dFO.DefaultFileNames.Clear();
-            dFO.DefaultFileNames.Add("home.html");
-            app.UseDefaultFiles(dFO);
             app.UseStaticFiles();
+            app.UseMvc(routes =>
+            {
+               routes.MapRoute("default", "{controller=Home}/{action=Index}/{id?}");
+            });
+
 
             app.Run(async (context) =>
             {
