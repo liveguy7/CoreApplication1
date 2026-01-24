@@ -15,6 +15,7 @@ namespace CoreApplication1
         {
             services.AddMvc(options =>
                  options.EnableEndpointRouting = false);
+            services.AddMvc().AddXmlSerializerFormatters();
             services.AddSingleton<IEmployeeRepository, EmployeeRepository>();
 
         }
@@ -42,7 +43,6 @@ namespace CoreApplication1
         }
     }
 }
-
 
 
 

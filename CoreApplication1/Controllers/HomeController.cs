@@ -7,7 +7,7 @@ namespace CoreApplication1.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
-        private IEmployeeRepository _eRep;
+        private readonly IEmployeeRepository _eRep;
 
         public HomeController(ILogger<HomeController> logger, IEmployeeRepository eRep)
         {
@@ -28,6 +28,14 @@ namespace CoreApplication1.Controllers
         {
             return "About Message";
         }
+
+        public ViewResult Details()
+        {
+            Employee model = _eRep.GetEmployee(1);
+            ViewBag.PageTitle = "Employee Details";
+
+            return View(model);
+        }
    
         public IActionResult Privacy()
         {
@@ -41,4 +49,7 @@ namespace CoreApplication1.Controllers
         }
     }
 }
+
+
+
 
