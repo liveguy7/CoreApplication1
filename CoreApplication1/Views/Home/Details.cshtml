@@ -1,16 +1,46 @@
-﻿@model CoreApplication1.Models.Employee
+﻿@model CoreApplication1.ViewModels.HomeDetailsViewModel
 
-@ViewBag.PageTitle
+@Model.PageTitle
 
 <h1>View</h1>
 <div>Details Page</div>
 
 
-<div>
-    Name: @Model.Name
-    Email: @Model.Email
-
+<div class="container mt-3">
+    <h2>Bordered Table</h2>
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Department</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>@Model.Employee1.Name</td>
+                <td>@Model.Employee1.Email</td>
+                <td>@Model.Employee1.Department</td>
+            </tr>
+            <tr>
+                <td>Mary</td>
+                <td>mary@na.com</td>
+                <td>IT</td>
+            </tr>
+            <tr>
+                <td>July</td>
+                <td>dooley@na.com</td>
+                <td>HR</td>
+            </tr>
+        </tbody>
+    </table>
 </div>
+
+@section Scripts {
+    <script src="~/js/test.js"></script>
+}
+
+
 
 
 

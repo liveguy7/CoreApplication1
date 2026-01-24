@@ -9,8 +9,8 @@ namespace CoreApplication1.Models
         {
             _employeeList = new List<Employee>() {
                 new Employee() {Id=1, Name="Mary", Department="HR", Email="mary@na.com" },
-                new Employee() {Id=1, Name="John", Department="HR", Email="john@na.com" },
-                new Employee() {Id=1, Name="Sam", Department="HR", Email="sam@na.com" }
+                new Employee() {Id=2, Name="John", Department="HR", Email="john@na.com" },
+                new Employee() {Id=3, Name="Sam", Department="HR", Email="sam@na.com" }
 
             };
         }
@@ -21,9 +21,26 @@ namespace CoreApplication1.Models
                                                  e.Id == id);
         }
 
+        public IEnumerable<Employee> GetAllEmployees()
+        {
+            return _employeeList;
+
+        }
+
 
     }
 }
+
+
+
+
+
+
+
+
+
+
+
 
 
 

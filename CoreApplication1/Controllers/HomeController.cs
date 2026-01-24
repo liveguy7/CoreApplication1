@@ -1,5 +1,6 @@
 using System.Diagnostics;
 using CoreApplication1.Models;
+using CoreApplication1.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CoreApplication1.Controllers
@@ -15,13 +16,10 @@ namespace CoreApplication1.Controllers
             _eRep = eRep;
         }
 
-        public JsonResult Index()
+        public ActionResult Index()
         {
-            return Json(new
-            {
-                _eRep.GetEmployee(1).Name,
-                number = 1
-            });
+            var tmp = _eRep.GetAllEmployees();
+            return View(tmp);
         }
 
         public String About()
@@ -31,10 +29,13 @@ namespace CoreApplication1.Controllers
 
         public ViewResult Details()
         {
-            Employee model = _eRep.GetEmployee(1);
-            ViewBag.PageTitle = "Employee Details";
+            HomeDetailsViewModel hDVM = new HomeDetailsViewModel()
+            {
+                Employee1 = _eRep.GetEmployee(1),
+                PageTitle = "Employee Details"
+            };
 
-            return View(model);
+            return View(hDVM);
         }
    
         public IActionResult Privacy()
