@@ -27,11 +27,11 @@ namespace CoreApplication1.Controllers
             return "About Message";
         }
 
-        public ViewResult Details()
+        public ViewResult Details(int? id)
         {
             HomeDetailsViewModel hDVM = new HomeDetailsViewModel()
             {
-                Employee1 = _eRep.GetEmployee(1),
+                Employee1 = _eRep.GetEmployee(id ?? 1),
                 PageTitle = "Employee Details"
             };
 

@@ -14,8 +14,8 @@ namespace CoreApplication1
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc(options =>
-                 options.EnableEndpointRouting = false);
-            services.AddMvc().AddXmlSerializerFormatters();
+                options.EnableEndpointRouting = false);
+        
             services.AddSingleton<IEmployeeRepository, EmployeeRepository>();
 
         }
@@ -28,6 +28,7 @@ namespace CoreApplication1
             }
 
             app.UseStaticFiles();
+            
             app.UseMvc(routes =>
             {
                routes.MapRoute("default", "{controller=Home}/{action=Index}/{id?}");
