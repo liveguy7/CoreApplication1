@@ -17,7 +17,7 @@
             </tr>
         </thead>
         <tbody>
-            <tr>
+            <tr id="firstRow">
                 <td>@Model.Employee1.Name</td>
                 <td>@Model.Employee1.Email</td>
                 <td>@Model.Employee1.Department</td>
@@ -34,6 +34,20 @@
             </tr>
         </tbody>
     </table>
+    <div class="card-footer text-center">
+        <a asp-controller="Home" asp-action="Index"
+           class="btn btn-primary">
+            Back
+        </a>
+        <a asp-controller="Home"  
+           class="btn btn-primary">
+            Edit
+        </a>
+        <a asp-controller="Home" 
+           class="btn btn-danger">
+            Delete
+        </a>
+    </div>
 </div>
 
 @section Scripts {

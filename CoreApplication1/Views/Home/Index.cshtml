@@ -30,7 +30,49 @@
             
         </tbody>
     </table>
+    <div class="card-deck">
+        @foreach(var employee in Model)
+        {
+            <div class="card m-3">
+                <div class="card header">
+                    <h3>@employee.Name</h3>
+                </div>
+                <img class="card-img-top" src="~/images/games.jpg" style="width:300px; height:100px; object-fit:cover;" />
+                <div class="card-footer text-center">
+                    <a asp-controller="Home" asp-action="Details" asp-route-id="@employee.Id"
+                    class="btn btn-primary">
+                    View</a>
+                    <a asp-controller="Home"
+                      class="btn btn-primary">
+                     Edit</a>
+                    <a asp-controller="Home" 
+                     class="btn btn-danger">
+                     Delete</a>
+                  
+                </div>
+
+            </div>
+        }
+
+    </div>
+  
 </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
