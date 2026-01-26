@@ -1,4 +1,5 @@
 ﻿using CoreApplication1.Models;
+using Microsoft.EntityFrameworkCore;
 using System.Diagnostics;
 
 namespace CoreApplication1
@@ -13,9 +14,11 @@ namespace CoreApplication1
 
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddDbContextPool<AppDbContext>(options =>
+                                  options.UseSqlServer(
+                                     _config.GetConnectionString("DefaultConnectionString")));
             services.AddMvc(options =>
                 options.EnableEndpointRouting = false);
-        
             services.AddSingleton<IEmployeeRepository, EmployeeRepository>();
 
         }
@@ -38,7 +41,7 @@ namespace CoreApplication1
             app.Run(async (context) =>
             {
                 await context.Response
-                    .WriteAsync($"Hosting Env: {env.EnvironmentName}");
+                    .WriteAsync($"Error Found Using Env.. {env.EnvironmentName}");
            
             });
         }
