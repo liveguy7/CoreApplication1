@@ -45,11 +45,15 @@ namespace CoreApplication1.Controllers
         }
 
         [HttpPost]
-        public RedirectToActionResult Create(Employee employee)
+        public ActionResult Create(Employee employee)
         {
-            Employee newEmployee = _eRep.AddEmployee(employee);
+            if (ModelState.IsValid)
+            {
+                Employee newEmployee = _eRep.AddEmployee(employee);
 
-            return RedirectToAction("Details", new { id = newEmployee.Id });
+                //return RedirectToAction("Details", new { id = newEmployee.Id });
+            }
+            return View();
         }
    
         public IActionResult Privacy()
