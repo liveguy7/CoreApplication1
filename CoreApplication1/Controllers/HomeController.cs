@@ -37,6 +37,20 @@ namespace CoreApplication1.Controllers
 
             return View(hDVM);
         }
+
+        [HttpGet]
+        public ViewResult Create()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public RedirectToActionResult Create(Employee employee)
+        {
+            Employee newEmployee = _eRep.AddEmployee(employee);
+
+            return RedirectToAction("Details", new { id = newEmployee.Id });
+        }
    
         public IActionResult Privacy()
         {
@@ -50,6 +64,9 @@ namespace CoreApplication1.Controllers
         }
     }
 }
+
+
+
 
 
 

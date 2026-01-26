@@ -6,6 +6,8 @@ namespace CoreApplication1.Models
         Employee GetEmployee(int id);
         IEnumerable<Employee> GetAllEmployees();
 
+        Employee AddEmployee(Employee employee);
+
     }
 
 
