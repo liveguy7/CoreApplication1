@@ -11,6 +11,10 @@ namespace CoreApplication1.Models
 
         public DbSet<Employee> empTarget {get; set;}
 
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Seed();
+        }
 
     }
 }

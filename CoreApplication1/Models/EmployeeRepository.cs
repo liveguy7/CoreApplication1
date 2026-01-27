@@ -37,6 +37,31 @@ namespace CoreApplication1.Models
 
         }
 
+        public Employee UpdateEmployee(Employee employeeC)
+        {
+            Employee employee = _employeeList.FirstOrDefault(e =>
+                                                      e.Id == employeeC.Id);
+            if(employee != null)
+            {
+                employee.Name = employeeC.Name;
+                employee.Email = employeeC.Email;
+                employee.Department = employeeC.Department;
+            }
+            return employee;
+        }
+
+        public Employee DeleteEmployee(int id)
+        {
+            Employee employee = _employeeList.FirstOrDefault(e =>
+                                                     e.Id == id);
+            if (employee != null)
+            {
+                _employeeList.Remove(employee);
+
+            }
+            return employee;
+        }
+
 
     }
 }

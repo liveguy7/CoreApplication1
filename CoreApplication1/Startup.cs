@@ -19,7 +19,7 @@ namespace CoreApplication1
                                      _config.GetConnectionString("DefaultConnectionString")));
             services.AddMvc(options =>
                 options.EnableEndpointRouting = false);
-            services.AddSingleton<IEmployeeRepository, EmployeeRepository>();
+            services.AddScoped<IEmployeeRepository, SQLEmployeeRepository>();
 
         }
 
