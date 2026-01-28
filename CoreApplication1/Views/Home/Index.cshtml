@@ -1,6 +1,8 @@
-﻿
+﻿@model IEnumerable<Employee>
+
 @{
     ViewData["Title"] = "Home Page";
+    var photoPath = "";
 }
 
 <div class="text-center">
@@ -21,10 +23,11 @@
         <tbody>
             @foreach(var emp in Model)
             {
+                photoPath = "~/images/" + (emp.PhotoPath1 ?? "games.jpg");
                 <tr>
                     <td>@emp.Id</td>
                     <td>@emp.Name
-                        <img class="card-img-top" src="~/images/games.jpg" style="width:100px; height:50px; object-fit:cover;" />
+                        <img class="card-img-top imageThumbnail" src="@photoPath" asp-append-version="true" style="width:100px; height:50px; object-fit:cover;" />
                     </td>
                     <td>@emp.Department</td>
                 </tr>
@@ -37,16 +40,17 @@
     <div class="card-deck">
         @foreach(var employee in Model)
         {
+            photoPath = "~/images/" + (employee.PhotoPath1 ?? "games.jpg");
             <div class="card m-3">
                 <div class="card header">
                     <h3>@employee.Name</h3>
                 </div>
-                <img class="card-img-top" src="~/images/games.jpg" style="width:300px; height:100px; object-fit:cover;" />
+                <img class="card-img-top imageThumbnail" src="@photoPath" asp-append-version="true" style="width:300px; height:100px; object-fit:cover;" />
                 <div class="card-footer text-center">
                     <a asp-controller="Home" asp-action="Details" asp-route-id="@employee.Id"
                     class="btn btn-primary">
                     View</a>
-                    <a asp-controller="Home"
+                    <a asp-controller="Home" asp-action="Edit" asp-route-id="@employee.Id"
                       class="btn btn-primary">
                      Edit</a>
                     <a asp-controller="Home" 

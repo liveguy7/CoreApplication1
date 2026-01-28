@@ -9,11 +9,14 @@ namespace CoreApplication1.Controllers
     {
         private readonly ILogger<HomeController> _logger;
         private readonly IEmployeeRepository _eRep;
+        private readonly Microsoft.AspNetCore.Hosting.IHostingEnvironment _hostingEnv;
 
-        public HomeController(ILogger<HomeController> logger, IEmployeeRepository eRep)
+        public HomeController(ILogger<HomeController> logger, IEmployeeRepository eRep, 
+                              Microsoft.AspNetCore.Hosting.IHostingEnvironment hostingEnv)
         {
             _logger = logger;
             _eRep = eRep;
+            _hostingEnv = hostingEnv;
         }
 
         public ActionResult Index()
@@ -39,19 +42,50 @@ namespace CoreApplication1.Controllers
         }
 
         [HttpGet]
+        public ViewResult Edit(int id)
+        {
+            Employee employee = _eRep.GetEmployee(id);
+            EmployeeEditViewModel empEVM = new EmployeeEditViewModel
+            {
+                Id = employee.Id,
+                Name = employee.Name,
+                Email = employee.Email,
+                Department = employee.Department,
+                ExistingPhotoPath = employee.PhotoPath1
+            };
+
+            return View(empEVM);
+        }
+
+        [HttpGet]
         public ViewResult Create()
         {
             return View();
         }
 
         [HttpPost]
-        public ActionResult Create(Employee employee)
+        public ActionResult Create(EmployeeCreateViewModel model)
         {
             if (ModelState.IsValid)
             {
-                Employee newEmployee = _eRep.AddEmployee(employee);
+                string uniqueFileName = null;
+                if(model.Photo != null)
+                {
+                    String uploadsFolder =  Path.Combine(_hostingEnv.WebRootPath, "images");
+                    uniqueFileName = Guid.NewGuid().ToString() + "_" + model.Photo.FileName;
+                    string filePath = Path.Combine(uploadsFolder, uniqueFileName);
+                    model.Photo.CopyTo(new FileStream(filePath, FileMode.Create));
+                }
+                Employee newEmployee = new Employee
+                {
+                    Name = model.Name,
+                    Email = model.Email,
+                    Department = model.Department,
+                    PhotoPath1 = uniqueFileName
+                };
 
-                //return RedirectToAction("Details", new { id = newEmployee.Id });
+                _eRep.AddEmployee(newEmployee);
+                return RedirectToAction("Details", new { id = newEmployee.Id });
             }
             return View();
         }
