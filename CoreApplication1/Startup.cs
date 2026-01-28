@@ -25,9 +25,15 @@ namespace CoreApplication1
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ILogger<Startup> logger)
         {
-            if (env.IsDevelopment())
+            if (!env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
+            }
+            else
+            {
+                app.UseExceptionHandler("/Error");
+                app.UseStatusCodePagesWithReExecute("/Error/{0}");
+                
             }
 
             app.UseStaticFiles();
@@ -38,12 +44,12 @@ namespace CoreApplication1
             });
 
 
-            app.Run(async (context) =>
-            {
-                await context.Response
-                    .WriteAsync($"Error Found Using Env.. {env.EnvironmentName}");
+            //app.Run(async (context) =>
+            //{
+            //    await context.Response
+            //        .WriteAsync($"Error Found Using Env.. {env.EnvironmentName}");
            
-            });
+            //});
         }
     }
 }

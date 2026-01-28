@@ -32,9 +32,18 @@ namespace CoreApplication1.Controllers
 
         public ViewResult Details(int? id)
         {
+
+            Employee employee1 = _eRep.GetEmployee(id.Value);
+            if(employee1 == null)
+            {
+                Response.StatusCode = 404;
+
+                return View("EmployeeNotFound", id.Value);
+            }
+
             HomeDetailsViewModel hDVM = new HomeDetailsViewModel()
             {
-                Employee1 = _eRep.GetEmployee(id ?? 1),
+                Employee1 = employee1,
                 PageTitle = "Employee Details"
             };
 
