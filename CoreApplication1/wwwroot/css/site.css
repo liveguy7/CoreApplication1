@@ -6,6 +6,10 @@ html {
     width: 75px;
 }
 
+.regtext{
+    width:50%;
+}
+
 .imageThumbnail {
     height: 200px;
     width:auto;
@@ -29,3 +33,5 @@ html {
 body {
   margin-bottom: 60px;
 }
+
+

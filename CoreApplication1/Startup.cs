@@ -1,4 +1,5 @@
 ﻿using CoreApplication1.Models;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using System.Diagnostics;
 
@@ -17,6 +18,8 @@ namespace CoreApplication1
             services.AddDbContextPool<AppDbContext>(options =>
                                   options.UseSqlServer(
                                      _config.GetConnectionString("DefaultConnectionString")));
+            services.AddIdentity<IdentityUser, IdentityRole>()
+                    .AddEntityFrameworkStores<AppDbContext>();
             services.AddMvc(options =>
                 options.EnableEndpointRouting = false);
             services.AddScoped<IEmployeeRepository, SQLEmployeeRepository>();
@@ -37,7 +40,7 @@ namespace CoreApplication1
             }
 
             app.UseStaticFiles();
-            
+            app.UseAuthentication();
             app.UseMvc(routes =>
             {
                routes.MapRoute("default", "{controller=Home}/{action=Index}/{id?}");
