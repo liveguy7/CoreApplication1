@@ -1,10 +1,18 @@
 ﻿using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
+using System.Runtime.InteropServices;
 
 namespace CoreApplication1.Controllers
 {
     public class ErrorController : Controller
     {
+        private readonly ILogger<ErrorController> _logger;
+        public ErrorController(ILogger<ErrorController> logger)
+        {
+            _logger = logger;
+
+        }
 
         [Route("Error/{statusCode}")]
         public IActionResult HttpStatusCodeHandler(int statusCode)
@@ -15,8 +23,8 @@ namespace CoreApplication1.Controllers
             {
                 case 404:
                     ViewBag.ErrorMessage = "Sorry, the resource you requested is not found";
-                    ViewBag.Path = statusCodeResult.OriginalPath;
-                    ViewBag.QS = statusCodeResult.OriginalQueryString;
+                    _logger.LogWarning($"404 Error Occured. Path = {statusCodeResult.OriginalPath}");
+                    _logger.LogWarning($"{statusCodeResult.OriginalQueryString}");
                     break;
             }
 
@@ -29,9 +37,8 @@ namespace CoreApplication1.Controllers
         {
             var exceptionDetails = HttpContext.Features.Get<IExceptionHandlerPathFeature>();
 
-            ViewBag.ExceptionPath = exceptionDetails.Path;
-            ViewBag.ExceptionMessage = exceptionDetails.Error.Message;
-            ViewBag.Stacktrace = exceptionDetails.Error.StackTrace;
+            _logger.LogError($"The path {exceptionDetails.Path} threw an exception");
+            _logger.LogError($"{exceptionDetails.Error}");
 
             return View("Error");
 
