@@ -1,10 +1,11 @@
 using System.Diagnostics;
 using CoreApplication1.Models;
 using CoreApplication1.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CoreApplication1.Controllers
-{
+{ 
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
@@ -19,6 +20,7 @@ namespace CoreApplication1.Controllers
             _hostingEnv = hostingEnv;
         }
 
+        [AllowAnonymous]
         public ActionResult Index()
         {
             var tmp = _eRep.GetAllEmployees();
@@ -51,6 +53,7 @@ namespace CoreApplication1.Controllers
         }
 
         [HttpGet]
+        
         public ViewResult Edit(int id)
         {
             Employee employee = _eRep.GetEmployee(id);
@@ -67,8 +70,8 @@ namespace CoreApplication1.Controllers
         }
 
         [HttpPost]
-        public IActionResult Edit(EmployeeEditViewModel model)
-        {
+        
+        public IActionResult Edit(EmployeeEditViewModel model)        {
             if(ModelState.IsValid)
             {
                 Employee employee = _eRep.GetEmployee(model.Id);
@@ -95,12 +98,14 @@ namespace CoreApplication1.Controllers
         }
 
         [HttpGet]
+      
         public ViewResult Create()
         {
             return View();
         }
 
         [HttpPost]
+       
         public ActionResult Create(EmployeeCreateViewModel model)
         {
             if (ModelState.IsValid)
@@ -120,7 +125,8 @@ namespace CoreApplication1.Controllers
             }
             return View();
         }
-   
+
+        [AllowAnonymous]
         public IActionResult Privacy()
         {
             return View();

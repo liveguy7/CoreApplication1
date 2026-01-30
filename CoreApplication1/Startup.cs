@@ -1,5 +1,7 @@
 ﻿using CoreApplication1.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.EntityFrameworkCore;
 using System.Diagnostics;
 
@@ -26,7 +28,15 @@ namespace CoreApplication1
             }).AddEntityFrameworkStores<AppDbContext>();
 
             services.AddMvc(options =>
-                options.EnableEndpointRouting = false);
+                            options.EnableEndpointRouting = false);
+            services.AddMvc(config =>
+            {
+                var policy = new AuthorizationPolicyBuilder()
+                                 .RequireAuthenticatedUser()
+                                 .Build();
+                config.Filters.Add(new AuthorizeFilter(policy));
+            });
+      
             services.AddScoped<IEmployeeRepository, SQLEmployeeRepository>();
 
         }
