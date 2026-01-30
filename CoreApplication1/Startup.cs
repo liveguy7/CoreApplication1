@@ -18,8 +18,13 @@ namespace CoreApplication1
             services.AddDbContextPool<AppDbContext>(options =>
                                   options.UseSqlServer(
                                      _config.GetConnectionString("DefaultConnectionString")));
-            services.AddIdentity<IdentityUser, IdentityRole>()
-                    .AddEntityFrameworkStores<AppDbContext>();
+            services.AddIdentity<IdentityUser, IdentityRole>(options =>
+            {
+                options.Password.RequiredLength = 10;
+                options.Password.RequiredUniqueChars = 3;
+
+            }).AddEntityFrameworkStores<AppDbContext>();
+
             services.AddMvc(options =>
                 options.EnableEndpointRouting = false);
             services.AddScoped<IEmployeeRepository, SQLEmployeeRepository>();
@@ -28,7 +33,7 @@ namespace CoreApplication1
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ILogger<Startup> logger)
         {
-            if (!env.IsDevelopment())
+            if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
             }
