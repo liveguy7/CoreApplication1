@@ -4,7 +4,7 @@ using Microsoft.VisualStudio.Web.CodeGenerators.Mvc.Templates.General;
 
 namespace CoreApplication1.Models
 {
-    public class AppDbContext : Microsoft.AspNetCore.Identity.EntityFrameworkCore.IdentityDbContext
+    public class AppDbContext : Microsoft.AspNetCore.Identity.EntityFrameworkCore.IdentityDbContext<ApplicationUser>
     {
 
         public AppDbContext(DbContextOptions<AppDbContext> options)

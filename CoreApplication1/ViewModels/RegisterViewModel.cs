@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System.ComponentModel.DataAnnotations;
+using CoreApplication1.Utilities;
 
 namespace CoreApplication1.ViewModels
 {
@@ -8,6 +9,7 @@ namespace CoreApplication1.ViewModels
         [Required]
         [EmailAddress]
         [Remote(action: "IsEmailInUse", controller: "Account")]
+        [ValidEmailDomain(allowedDomain: "na.com", ErrorMessage = "Must be na.com")]
         public string Email { get; set; }
 
         [Required]
@@ -19,7 +21,20 @@ namespace CoreApplication1.ViewModels
         [Compare("Password", ErrorMessage = "Password does not match")]
         public string ConfirmPassword { get; set; }
 
+        public string City { get; set; }
+
+
     }
 }
+
+
+
+
+
+
+
+
+
+
 
 
