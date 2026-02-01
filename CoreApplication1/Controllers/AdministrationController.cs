@@ -2,6 +2,7 @@
 using CoreApplication1.ViewModels;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace CoreApplication1.Controllers
 {
@@ -64,27 +65,57 @@ namespace CoreApplication1.Controllers
         {
             var role = await _roleManager.FindByIdAsync(id);
 
-            if(role == null)
+            if (role == null)
             {
-                ViewBag.ErrorMessage = $"Role with Id = {id} cannnot be found";
-
+                ViewBag.ErrorMessage = $"Role with Id = {id} cannot be found";
                 return View("NotFound");
             }
+
             var model = new EditRoleViewModel
             {
                 Id = role.Id,
                 RoleName = role.Name
-
             };
-            foreach(var user in _userManager.Users)
+
+            var users = await _userManager.Users.ToListAsync();
+
+            foreach (var user in users)
             {
-                if(await _userManager.IsInRoleAsync(user, role.Name))
+                if (await _userManager.IsInRoleAsync(user, role.Name))
                 {
                     model.Users.Add(user.UserName);
                 }
             }
-            return View(model);
 
+            return View(model);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> EditRole(EditRoleViewModel model)
+        {
+            var role = await _roleManager.FindByIdAsync(model.Id);
+
+            if (role == null)
+            {
+                ViewBag.ErrorMessage = $"Role with Id = {model.Id} cannot be found";
+                return View("NotFound");
+            }
+            else
+            {
+                role.Name = model.RoleName;
+                var result = await _roleManager.UpdateAsync(role);
+
+                if (result.Succeeded)
+                {
+                    return RedirectToAction("ListRoles");
+                }
+                foreach(var error in result.Errors)
+                {
+                    ModelState.AddModelError("", error.Description);
+                }
+            }
+
+            return View(model);
         }
     }
 }

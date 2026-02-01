@@ -10,6 +10,10 @@ html {
     width:50%;
 }
 
+.removeRole{
+    width:12%;
+}
+
 .imageThumbnail {
     height: 200px;
     width:auto;

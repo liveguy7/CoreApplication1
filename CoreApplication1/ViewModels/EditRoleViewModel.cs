@@ -6,9 +6,10 @@ namespace CoreApplication1.ViewModels
     {
         public EditRoleViewModel()
         {
-            Users = new List<String>();
+            Users = new List<string>();
         }
-        public String Id { get; set; }
+
+        public string Id { get; set; }
 
         [Required(ErrorMessage = "Role Name is required")]
         public string RoleName { get; set; }
