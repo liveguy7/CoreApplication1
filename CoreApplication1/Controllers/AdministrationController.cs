@@ -3,9 +3,11 @@ using CoreApplication1.ViewModels;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Authorization;
 
 namespace CoreApplication1.Controllers
 {
+    [Authorize(Roles = "admin,admin2")]
     public class Administration : Controller
     {
         private readonly RoleManager<IdentityRole> _roleManager;
@@ -16,6 +18,14 @@ namespace CoreApplication1.Controllers
             _roleManager = roleManager;
             _userManager = userManager;
 
+        }
+
+        [HttpGet]
+        public IActionResult ListUsers()
+        {
+            var users = _userManager.Users;
+
+            return View(users);
         }
 
         [HttpGet]

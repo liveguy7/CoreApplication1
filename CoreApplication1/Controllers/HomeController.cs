@@ -53,7 +53,7 @@ namespace CoreApplication1.Controllers
         }
 
         [HttpGet]
-        
+        [Authorize(Roles = "admin,admin2")]
         public ViewResult Edit(int id)
         {
             Employee employee = _eRep.GetEmployee(id);
@@ -70,7 +70,7 @@ namespace CoreApplication1.Controllers
         }
 
         [HttpPost]
-        
+        [Authorize(Roles = "admin,admin2")]
         public IActionResult Edit(EmployeeEditViewModel model)        {
             if(ModelState.IsValid)
             {

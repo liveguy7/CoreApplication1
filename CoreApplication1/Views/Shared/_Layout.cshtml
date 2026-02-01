@@ -29,17 +29,20 @@
                             <a class="nav-link text-black" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-danger" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+                            <a class="nav-link text-black" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
                         </li>
                      
-                        <li class="nav-item">
-                            <a class="nav-link text-black" asp-area="" asp-controller="Home" asp-action="Create">Add Employee</a>
-                        </li>
-                      
-                        <li class="nav-item">
-                            <a class="nav-link text-black" asp-area="" asp-controller="Administration" asp-action="ListRoles">View Roles</a>
-                        </li>
-                     
+                        @if(signInManager.IsSignedIn(User) && User.IsInRole("admin"))
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-black" asp-area="" asp-controller="Administration" asp-action="ListUsers">User Administration</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-black" asp-area="" asp-controller="Administration" asp-action="ListRoles">Role Administration</a>
+                            </li>
+                            
+                        }
+
                     </ul>
                     <ul class="navbar-nav ml-auto">
                         @if(signInManager.IsSignedIn(User))

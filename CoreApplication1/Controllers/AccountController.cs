@@ -112,6 +112,13 @@ namespace CoreApplication1.Controllers
 
         }
 
+        [HttpGet]
+        [AllowAnonymous]
+        public IActionResult AccessDenied()
+        {
+            return View();
+
+        }
 
     }
 }
