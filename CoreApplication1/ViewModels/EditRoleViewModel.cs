@@ -1,0 +1,23 @@
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace CoreApplication1.ViewModels
+{
+    public class EditRoleViewModel
+    {
+        public EditRoleViewModel()
+        {
+            Users = new List<String>();
+        }
+        public String Id { get; set; }
+
+        [Required(ErrorMessage = "Role Name is required")]
+        public string RoleName { get; set; }
+
+        public List<String> Users { get; set; }
+
+    }
+}
+
+
+
+
